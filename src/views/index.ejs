@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div class="container">
+        <form action="/add" method="post">
+            <legend>Agrega una tarea</legend>
+            <div class="form-group">
+                <input placeholder="Title" type="text" id="titulo" class="form-control" name="title" >
+            </div>
+            <div class="form-group">
+                <textarea placeholder="Add a descipcion" class="form-control" name="description" cols="50" rows="1"></textarea>
+            </div>
+            <button class="btn btn-primary">
+                Add
+            </button>            
+
+        </form>
+        <hr>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Titulo</th>
+                    <th>Descripcion</th>
+                    <th>Operaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (var i = 0; i < tasks.length; i++) { %>
+                    <tr>
+                        <td><%= i + 1 %></td>
+                        <td><strong><%= tasks[i].title %></strong></td>
+                        <td><%= tasks[i].description %></td>
+                        <td> <a class="<%= tasks[i].status ? 'btn btn-success': 'btn btn-dark' %>" href="/turn/<%=tasks[i]._id%>">DONE</a> 
+                             <a id="delete" class="btn btn-danger" href="/delete/<%=tasks[i]._id%>">DELETE</a> </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+    </div>
+
+    <script>
+    
+    document.getElementById('titulo').focus()
+    document.getElementById('delete').addEventListener('click', function (e) {
+        let response  = confirm('estas seguro de eliminarlo?')
+            if(!response) {
+                e.preventDefault();
+            }
+    })
+    </script>
+
+</body>
+</html>
